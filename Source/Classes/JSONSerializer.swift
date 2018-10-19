@@ -101,7 +101,7 @@ internal class JSONSerializer {
                     channelIdentifier = item.value as? String
                 }
                 
-                f let channelIdStr = idJSON["room_id"], let channelId = channelIdStr as? String  {
+                if let channelIdStr = idJSON["room_id"], let channelId = channelIdStr as? String  {
                   channelIdentifier = channelId
                 }
                 
