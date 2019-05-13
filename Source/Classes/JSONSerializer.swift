@@ -37,6 +37,15 @@ internal class JSONSerializer {
             }
             
             identifierDict["channel"] = "\(channel.name)"
+          
+            var identifierStr = ""
+            var sortedDic = identifierDict.sorted(by: { $0.key > $1.key })
+            let first = sortedDic.removeFirst()
+            identifierStr += "{\"\(first.key)\":\"\(first.value)\""
+            sortedDic.forEach { elem in
+              identifierStr += ",\"\(elem.key)\":\"\(elem.value)\""
+            }
+            identifierStr += "}"
             
             let JSONData = try JSONSerialization.data(withJSONObject: identifierDict, options: JSONSerialization.WritingOptions(rawValue: 0))
             guard let identifierString = NSString(data: JSONData, encoding: String.Encoding.utf8.rawValue)
@@ -44,7 +53,7 @@ internal class JSONSerializer {
             
             var commandDict = [
                 "command" : command.string,
-                "identifier" : identifierString
+                "identifier" : identifierStr
             ] as [String : Any]
             
             if let _ = data {
